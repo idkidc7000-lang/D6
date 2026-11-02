@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android Simulator 2016</title>
+
+<link rel="stylesheet"
+ href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+ rel="stylesheet">
+
+<style>
+body {
+    background: #252525;
+    font-family: Roboto, Arial, sans-serif;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+h2 {
+    margin-bottom: 25px;
+}
+
+.phone {
+    width: 320px;
+    height: 620px;
+    background: #111;
+    border: 8px solid #444;
+    border-radius: 35px;
+    margin: auto;
+    padding: 8px;
+    box-shadow: 0 10px 35px #000;
+    position: relative;
+}
+
+.speaker {
+    width: 55px;
+    height: 5px;
+    background: #555;
+    border-radius: 10px;
+    margin: 0 auto 7px;
+}
+
+.screen {
+    height: 545px;
+    background: #263238;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+}
+
+.status {
+    height: 25px;
+    background: rgba(0,0,0,.3);
+    padding: 3px 9px;
+    font-size: 12px;
+}
+
+.status span:last-child {
+    float: right;
+}
+
+.page {
+    display: none;
+    height: 520px;
+    overflow-y: auto;
+}
+
+#home {
+    display: block;
+    background: linear-gradient(145deg,#263c70,#536d9c);
+    text-align: center;
+    padding-top: 65px;
+}
+
+.clock {
+    font-size: 48px;
+    font-weight: 300;
+}
+
+.date {
+    font-size: 15px;
+    margin-bottom: 55px;
+}
+
+.icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.app {
+    width: 25%;
+    margin-bottom: 22px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.app i {
+    display: block;
+    font-size: 27px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50%;
+    background: #fff;
+    color: #455a64;
+    margin: 0 auto 7px;
+}
+
+.dock {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+}
+
+.dock .app {
+    margin-bottom: 0;
+}
+
+#drawer {
+    background: #eee;
+    color: #222;
+    padding-top: 20px;
+}
+
+#settings, #phone, #messages, #browser, #about {
+    background: #fafafa;
+    color: #222;
+}
+
+.title {
+    background: #009688;
+    color: white;
+    padding: 18px;
+    font-size: 19px;
+}
+
+.row-item {
+    padding: 17px 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.row-item i {
+    width: 30px;
+    color: #009688;
+}
+
+.navbar-phone {
+    height: 32px;
+    background: #111;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar-phone button {
+    background: none;
+    border: none;
+    color: #ddd;
+    font-size: 17px;
+    width: 33%;
+}
+
+.dial-display {
+    height: 75px;
+    font-size: 28px;
+    text-align: center;
+    padding: 15px;
+}
+
+.dialpad {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    padding: 5px 25px;
+}
+
+.dialpad button {
+    border: none;
+    background: #eee;
+    color: #222;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    margin: 5px auto;
+    font-size: 20px;
+}
+
+.call-button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 35px;
+    margin: 10px auto;
+    display: block;
+}
+
+.message-box {
+    padding: 15px;
+}
+
+.message-box input, #browser input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.message-bubble {
+    background: #dcedc8;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 8px;
+    color: #222;
+    text-align: right;
+}
+
+#browser {
+    padding: 12px;
+}
+
+#browser button {
+    background: #009688;
+    color: white;
+    border: none;
+    padding: 10px;
+}
+
+.browser-content {
+    margin-top: 20px;
+    background: white;
+    padding: 15px;
+    min-height: 300px;
+}
+
+#about {
+    padding: 25px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Android 6.0 Simulator</h2>
+
+<div class="phone">
+    <div class="speaker"></div>
+
+    <div class="screen">
+
+        <div class="status">
+            <span id="statusTime">12:00</span>
+            <span>
+                <i class="fa fa-wifi"></i>
+                <i class="fa fa-signal"></i>
+                <i class="fa fa-battery-three-quarters"></i>
+            </span>
+        </div>
+
+        <!-- HOME SCREEN -->
+        <div class="page" id="home">
+            <div class="clock" id="clock">12:00</div>
+            <div class="date" id="date">Monday, January 1</div>
+
+            <div class="icons">
+                <div class="app" onclick="openApp('phone')">
+                    <i class="fa fa-phone" style="color:#4caf50"></i>
+                    Phone
+                </div>
+
+                <div class="app" onclick="openApp('messages')">
+                    <i class="fa fa-comments" style="color:#4caf50"></i>
+                    Messages
+                </div>
+
+                <div class="app" onclick="openApp('browser')">
+                    <i class="fa fa-globe" style="color:#2196f3"></i>
+                    Browser
+                </div>
+
+                <div class="app" onclick="openApp('settings')">
+                    <i class="fa fa-cog"></i>
+                    Settings
+                </div>
+            </div>
+
+            <div class="dock">
+                <div class="icons">
+                    <div class="app" onclick="openApp('phone')">
+                        <i class="fa fa-phone" style="color:#4caf50"></i>
+                    </div>
+                    <div class="app" onclick="openApp('drawer')">
+                        <i class="fa fa-th"></i>
+                    </div>
+                    <div class="app" onclick="openApp('browser')">
+                        <i class="fa fa-chrome" style="color:#2196f3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP DRAWER -->
+        <div class="page" id="drawer">
+            <div class="title">Apps</div>
+            <div class="icons">
+                <div class="app" onclick="openApp('phone')">
+                    <i class="fa fa-phone"></i>Phone
+                </div>
+                <div class="app" onclick="openApp('messages')">
+                    <i class="fa fa-comments"></i>Messages
+                </div>
+                <div class="app" onclick="openApp('browser')">
+                    <i class="fa fa-globe"></i>Browser
+                </div>
+                <div class="app" onclick="openApp('settings')">
+                    <i class="fa fa-cog"></i>Settings
+                </div>
+                <div class="app" onclick="openApp('about')">
+                    <i class="fa fa-android"></i>About
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="page" id="settings">
+            <div class="title">Settings</div>
+
+            <div class="row-item">
+                <i class="fa fa-wifi"></i> Wi-Fi
+                <span class="pull-right">On</span>
+            </div>
+
+            <div class="row-item">
+                <i class="fa fa-bluetooth"></i> Bluetooth
+                <span class="pull-right">Off</span>
+            </div>
+
+            <div class="row-item">
+                <i class="fa fa-volume-up"></i> Sound
+            </div>
+
+            <div class="row-item">
+                <i class="fa fa-desktop"></i> Display
+            </div>
+
+            <div class="row-item">
+                <i class="fa fa-lock"></i> Security
+            </div>
+
+            <div class="row-item" onclick="openApp('about')">
+                <i class="fa fa-info-circle"></i> About phone
+            </div>
+        </div>
+
+        <!-- PHONE -->
+        <div class="page" id="phone">
+            <div class="title">Phone</div>
+            <div class="dial-display" id="number"></div>
+
+            <div class="dialpad">
+                <button onclick="dial('1')">1</button>
+                <button onclick="dial('2')">2</button>
+                <button onclick="dial('3')">3</button>
+                <button onclick="dial('4')">4</button>
+                <button onclick="dial('5')">5</button>
+                <button onclick="dial('6')">6</button>
+                <button onclick="dial('7')">7</button>
+                <button onclick="dial('8')">8</button>
+                <button onclick="dial('9')">9</button>
+                <button onclick="dial('*')">*</button>
+                <button onclick="dial('0')">0</button>
+                <button onclick="dial('#')">#</button>
+            </div>
+
+            <button class="call-button" onclick="alert('Demo only: no real calls are made.')">
+                <i class="fa fa-phone"></i> Call
+            </button>
+            <button class="btn btn-default btn-block" onclick="clearNumber()">
+                Clear number
+            </button>
+        </div>
+
+        <!-- MESSAGES -->
+        <div class="page" id="messages">
+            <div class="title">Messages</div>
+            <div class="message-box">
+                <p>No conversations yet.</p>
+                <input id="messageInput" placeholder="Type a demo message...">
+                <button class="btn btn-success btn-block"
+                 onclick="sendMessage()">Send</button>
+                <div id="messageList"></div>
+            </div>
+        </div>
+
+        <!-- BROWSER -->
+        <div class="page" id="browser">
+            <div class="title">Browser</div>
+            <input id="address" value="https://example.com">
+            <button onclick="browse()">Go</button>
+
+            <div class="browser-content" id="browserContent">
+                <h3>Welcome to Browser</h3>
+                <p>This is a simulated browser app.</p>
+                <p>Enter a website address to open it in a new tab.</p>
+            </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="page" id="about">
+            <div style="font-size:65px;color:#4caf50;margin-top:35px">
+                <i class="fa fa-android"></i>
+            </div>
+            <h3>Android 6.0</h3>
+            <p>Marshmallow</p>
+            <p>GameZone Virtual Device</p>
+            <p>Build version: 2016.01</p>
+        </div>
+
+    </div>
+
+    <div class="navbar-phone">
+        <button onclick="goBack()">
+            <i class="fa fa-caret-left"></i>
+        </button>
+        <button onclick="goHome()">
+            <i class="fa fa-circle-o"></i>
+        </button>
+        <button onclick="openApp('drawer')">
+            <i class="fa fa-square-o"></i>
+        </button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script>
+var currentPage = "home";
+var historyPages = [];
+
+function openApp(app) {
+    if (currentPage !== app) {
+        historyPages.push(currentPage);
+    }
+
+    $(".page").hide();
+    $("#" + app).show();
+    currentPage = app;
+}
+
+function goHome() {
+    $(".page").hide();
+    $("#home").show();
+    historyPages = [];
+    currentPage = "home";
+}
+
+function goBack() {
+    if (historyPages.length > 0) {
+        var previous = historyPages.pop();
+        $(".page").hide();
+        $("#" + previous).show();
+        currentPage = previous;
+    } else {
+        goHome();
+    }
+}
+
+function dial(value) {
+    $("#number").text($("#number").text() + value);
+}
+
+function clearNumber() {
+    $("#number").text("");
+}
+
+function sendMessage() {
+    var message = $("#messageInput").val();
+
+    if (message.trim() !== "") {
+        $("#messageList").append(
+            '<div class="message-bubble"></div>'
+        );
+
+        $("#messageList .message-bubble:last").text(message);
+        $("#messageInput").val("");
+    }
+}
+
+function browse() {
+    var address = $("#address").val().trim();
+
+    if (!address) {
+        return;
+    }
+
+    if (!/^https?:\/\//i.test(address)) {
+        address = "https://" + address;
+    }
+
+    window.open(address, "_blank");
+}
+
+function updateClock() {
+    var now = new Date();
+
+    var time = now.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    $("#clock").text(time);
+    $("#statusTime").text(time);
+
+    $("#date").text(now.toLocaleDateString([], {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+    }));
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+</body>
+                      </html>
